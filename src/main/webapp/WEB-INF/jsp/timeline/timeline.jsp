@@ -119,3 +119,33 @@
 		</div>
 	</div>
 </div>
+
+<script>
+$(document).ready(function(){
+	// 파일업로드 이미지 버튼 클릭 -> 파일 선택 창이 뜬다
+	$('#fileUploadBtn').on('click', function(e){
+		e.prevenrDefault(); // 제일 위로 올라가는 동작 중지
+		$('#file').click(); // 사용자가 input file을 클릭한 것과 같은 동작
+	});
+	
+	// 사용자가 파일을 선택했을 때 => 파일명을 옆에 노출시킴
+	$('#file').on('change', function(e){
+		let fileName = e.target.files[0].name; // 업로드된 파일의 이름을 변수에 저장
+		console.log("fileName:" + fileName)
+		
+		let fileNameArr = fileName.split('.');
+		if (fileNameArr[fileNameArr.length - 1] != 'png'
+				&& fileNameArr[fileNameArr.length - 1] != 'gif'
+				&& fileNameArr[fileNameArr.length - 1] != 'jpg'
+				&& fileNameArr[fileNameArr.length - 1] != 'jpeg') {
+			alert("이미지 파일만 업로드 할 수 있습니다.");
+			$(this).val(''); // 잘못 올라간 파일을 지워준다
+			$('#fileName').text(''); // 잘못 올라간 파일명도 지워준다
+			return;
+		}
+		
+		$('#fileName').text(fileName); // 파일명을 div 사이에 노출시킨다.
+		
+	});
+});
+</script>
